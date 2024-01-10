@@ -23,7 +23,7 @@ const Currencies = lazy(() => import("@/pages/Currencies"));
 const Setting = lazy(() => import("@/pages/Setting"));
 const StoreHome = lazy(() => import("@/pages/StoreHome"));
 const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
-const myCategory = lazy(() => import("@/pages/myCategory"));
+const myCategory = lazy(() => import("@/pages/MyCategory"));
 const User = lazy(() => import("@/pages/Users"));
 
 /*
