@@ -12,6 +12,7 @@ const ImageUpload = ({ onUpload }) => {
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
+    onUpload(file);
     handleFile(file);
   };
 
