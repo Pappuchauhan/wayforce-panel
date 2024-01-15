@@ -47,7 +47,7 @@ const user = () => {
     serviceData,
     handleChangePage,
     handleSubmitMyCategory,
-  } = useFilter(data.data);
+  } = useFilter(data);
 
   const { t } = useTranslation();
 
@@ -134,7 +134,15 @@ const user = () => {
             <TableHeader>
               <tr>
                 <TableCell>Name</TableCell>
-                <TableCell>Price</TableCell> 
+                <TableCell>Gender</TableCell>
+                <TableCell>Mobile</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>User Type</TableCell>
+                <TableCell>DOB</TableCell>
+                <TableCell>Age</TableCell>
+                <TableCell>Wallet</TableCell> 
+                <TableCell>Published</TableCell> 
                 <TableCell className="text-center">
                  Status
                 </TableCell> 
@@ -145,7 +153,7 @@ const user = () => {
               </tr>
             </TableHeader>
 
-            <UserTable staffs={dataTable} lang={lang} />
+            <UserTable users={dataTable} lang={lang} />
           </Table>
           <TableFooter>
             <Pagination

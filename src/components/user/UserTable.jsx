@@ -11,8 +11,8 @@ import UserDrawer from "@/components/drawer/UserDrawer";
 import DeleteModal from "@/components/modal/DeleteModal";
 import EditDeleteButton from "@/components/table/EditDeleteButton";
 import ActiveInActiveButton from "@/components/table/ActiveInActiveButton";
-
-const MyCategoryTable = ({ staffs, lang }) => {
+import useUserSubmit from "@/hooks/useUserSubmit";
+const UserTable = ({ users, lang }) => {
   const {
     title,
     serviceId,
@@ -21,6 +21,10 @@ const MyCategoryTable = ({ staffs, lang }) => {
     isSubmitting,
     handleResetPassword,
   } = useToggleDrawer(); 
+
+  const {
+    formattedDate
+  } = useUserSubmit();
 
   return (
     <>
@@ -31,30 +35,70 @@ const MyCategoryTable = ({ staffs, lang }) => {
       </MainDrawer>
 
       <TableBody>
-        {staffs?.map((staff) => (
-          <TableRow key={staff._id}>
+        {users?.map((user) => (
+          <TableRow key={user._id}>
             
-
             <TableCell>
-              <span className="text-sm">{staff.name}</span>{" "}
+              <div className="flex items-center">
+                <Avatar
+                  className="hidden mr-3 md:block bg-gray-50"
+                  src={user?.profileImage}
+                  alt="user"
+                />
+                <div>
+                  <h2 className="text-sm font-medium">
+                    {user?.name}
+                  </h2>
+                </div>
+              </div>
             </TableCell>
             <TableCell>
-              <span className="text-sm ">{staff.price}</span>
+              <span className="text-sm">{user.gender}</span>{" "}
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.mobile}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.email}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.category}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.userType}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{formattedDate(user.dob)}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.age}</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm ">{user.wallet}</span>
             </TableCell>
   
             <TableCell className="text-center text-xs">
-              <Status status={staff.status} />
+              <Status status={user.status} />
+            </TableCell>
+
+            <TableCell className="text-center">
+              <ActiveInActiveButton
+                id={user?._id}
+                staff={user}
+                option="user"
+                status={user.status}
+              />
             </TableCell>
  
 
             <TableCell>
               <EditDeleteButton
-                id={staff._id}
-                staff={staff}
+                id={user._id}
+                user={user}
                 isSubmitting={isSubmitting}
                 handleUpdate={handleUpdate}
                 handleModalOpen={handleModalOpen} 
-                title={staff?.name}
+                title={user?.name}
               />
             </TableCell>
           </TableRow>
@@ -64,4 +108,4 @@ const MyCategoryTable = ({ staffs, lang }) => {
   );
 };
 
-export default MyCategoryTable;
+export default UserTable;

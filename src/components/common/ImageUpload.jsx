@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { FiUploadCloud, FiXCircle } from "react-icons/fi";
 const ImageUpload = ({ onUpload }) => {
-  const [image, setImage] = useState(null);
-  const [filename, setFilename] = useState('');
+  const [image, setImage] = useState(null); 
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -13,6 +12,7 @@ const ImageUpload = ({ onUpload }) => {
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     onUpload(file);
+   // console.log(sdfsdf)
     handleFile(file);
   };
 
@@ -20,21 +20,12 @@ const ImageUpload = ({ onUpload }) => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result);
-        setFilename(file.name); // Set the filename
+        setImage(reader.result); 
       };
       reader.readAsDataURL(file);
     }
   };
-
-  const handleSubmit = () => {
-    // Pass the image and filename to the parent component
-    if (image) {
-      onUpload({ image, filename });
-      setImage(null);
-      setFilename('');
-    }
-  };
+ 
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -61,14 +52,7 @@ const ImageUpload = ({ onUpload }) => {
         <div className="mt-4">
           <img src={image} alt="Preview" className="max-w-xs max-h-xs" />
         </div>
-      )}
-      {/*<button
-        onClick={handleSubmit}
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        disabled={!image}
-      >
-        Upload Image
-      </button>*/}
+      )} 
     </div>
   );
 };

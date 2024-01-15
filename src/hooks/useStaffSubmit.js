@@ -18,7 +18,7 @@ const useStaffSubmit = (id) => {
     useContext(SidebarContext);
   const [imageUrl, setImageUrl] = useState("");
   const [selectedDate, setSelectedDate] = useState(
-    dayjs(new Date()).format("YYYY-MM-DD")
+    dayjs().subtract(15, 'year').format("YYYY-MM-DD")
   );
   const [language, setLanguage] = useState(lang || "en");
   const [resData, setResData] = useState({});

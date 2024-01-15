@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Card, CardBody, Input, Select, Textarea } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,7 @@ import DrawerButton from "@/components/form/button/DrawerButton";
 import LabelArea from "@/components/form/selectOption/LabelArea";
 import Uploader from "@/components/image-uploader/Uploader";
 import ImageUpload from "@/components/common/ImageUpload";
-
+import Mulselect from "react-select";
 
 const UserDrawer = ({ id }) => {
   const {
@@ -26,16 +26,30 @@ const UserDrawer = ({ id }) => {
     setImageUrl,
     isSubmitting,
     selectedDate,
+    userImage,
+    setUserImage,
+    panImage,
+    setPanImage,
+    aadharImage,
+    setAadharImage,
     setSelectedDate,
     handleSelectLanguage,
+    Controller,
+    control
   } = useUserSubmit(id);
   const { t } = useTranslation();
+ 
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null); 
 
-  const handleImageUpload = (imageData) => {
-    // Handle the uploaded image data, e.g., send it to the server
-    console.log('Uploaded image:', imageData);
-  };
-
+  const languageOptions = [
+    { value: "English", label: "English" },
+    { value: "Spanish", label: "Spanish" },
+    { value: "French", label: "French" },
+    // Add more language options as needed
+  ];
+ 
 
   return (
     <>
@@ -62,8 +76,8 @@ const UserDrawer = ({ id }) => {
                 <div className=" rounded-lg">
                   <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                     <LabelArea label="User Image" />
-                    <div className="col-span-8 sm:col-span-4"> 
-                      <ImageUpload onUpload={handleImageUpload} />
+                    <div className="col-span-8 sm:col-span-4">
+                      <ImageUpload onUpload={setUserImage} image={image1} setImage={setImage1} />
                     </div>
                   </div>
 
@@ -72,7 +86,7 @@ const UserDrawer = ({ id }) => {
                   </h2>
 
                   <div className="grid grid-cols-2 gap-4">
-                  <div>
+                    <div>
                       <LabelArea label="User Type" />
                       <Select
                         className="bg-white"
@@ -121,16 +135,6 @@ const UserDrawer = ({ id }) => {
                       />
                       <Error errorName={errors.email} />
                     </div>
-                    <div>
-                      <LabelArea label="Age" />
-                      <InputArea
-                        register={register}
-                        label="Age"
-                        name="age"
-                        type="text"
-                      />
-                      <Error errorName={errors.name} />
-                    </div>
 
                     <div>
                       <LabelArea label="Gender" />
@@ -153,25 +157,37 @@ const UserDrawer = ({ id }) => {
 
                     <div>
                       <LabelArea label="DOB" />
-                      <InputArea
-                        register={register}
+                      <Input
+                     
+                        
+                       {...register(`dob`, {
+                        required: `DOB is required!`,
+                        default: selectedDate
+                      })}
                         label="DOB"
                         name="dob"
-                        type="text"
+                        type="date"
                       />
                       <Error errorName={errors.dob} />
                     </div>
 
-                    <div>
+                    <div className="col-span-2">
                       <LabelArea label="Speaking Language" />
-                      <InputArea
-                        register={register}
-                        label="Price"
-                        name="price"
-                        type="text"
-                        required={true}
-                      />
-                      <Error errorName={errors.name} />
+                      
+                      <Controller
+        name="speakingLanguages"
+        control={control}
+        render={({ field }) => (
+          <Mulselect
+            {...field}
+            isMulti
+            options={languageOptions}
+          />
+        )}
+      />
+         
+
+                      <Error errorName={errors.speakingLanguages} />
                     </div>
                   </div>
                 </div>
@@ -184,22 +200,22 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="Address Line 1"
-                        name="address[addressLine1]"
+                        name="addressLine1"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.addressLine1} />
+                      <Error errorName={errors.addressLine1} />
                     </div>
                     <div>
                       <LabelArea label="Address line 2" />
                       <InputArea
                         register={register}
                         label="Address line 2"
-                        name="address[addressLine2]"
+                        name="addressLine2"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.addressLine2} />
+                      <Error errorName={errors.addressLine2} />
                     </div>
 
                     <div>
@@ -207,11 +223,11 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="Block"
-                        name="address[block]"
+                        name="block"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.block} />
+                      <Error errorName={errors.block} />
                     </div>
 
                     <div>
@@ -219,11 +235,11 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="Pin Code"
-                        name="address[pinCode]"
+                        name="pinCode"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.pinCode} />
+                      <Error errorName={errors.pinCode} />
                     </div>
 
                     <div>
@@ -231,11 +247,11 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="State"
-                        name="address[state]"
+                        name="state"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.state} />
+                      <Error errorName={errors.state} />
                     </div>
 
                     <div>
@@ -243,11 +259,11 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="City"
-                        name="address[city]"
+                        name="city"
                         type="text"
                         required={true}
                       />
-                      <Error errorName={errors.address?.city} />
+                      <Error errorName={errors.city} />
                     </div>
 
                     <div>
@@ -255,11 +271,11 @@ const UserDrawer = ({ id }) => {
                       <InputArea
                         register={register}
                         label="Country"
-                        name="address[country]"
+                        name="country"
                         type="text"
                         defaultValue={"India"}
                       />
-                      <Error errorName={errors.address?.country} />
+                      <Error errorName={errors.country} />
                     </div>
                   </div>
                 </div>
@@ -343,7 +359,7 @@ const UserDrawer = ({ id }) => {
                       <Textarea
                         className="border text-sm  block w-full bg-white  border-gray-200"
                         {...register("bio", {
-                          required: true,
+                          required: false,
                         })}
                         name="bio"
                         rows="4"
@@ -383,24 +399,15 @@ const UserDrawer = ({ id }) => {
                     <div className="">
                       <LabelArea label="Upload Pan Card" />
                       <div className="col-span-8 sm:col-span-4">
-                        <Uploader
-                          imageUrl={imageUrl}
-                          setImageUrl={setImageUrl}
-                          folder="admin"
-                          required={true}
-                        />
+                        <ImageUpload onUpload={setPanImage} image={image2} setImage={setImage2} />
                       </div>
                     </div>
 
                     <div className="">
                       <LabelArea label="Upload Aadhar Card" />
                       <div className="col-span-8 sm:col-span-4">
-                        <Uploader
-                          imageUrl={imageUrl}
-                          setImageUrl={setImageUrl}
-                          folder="admin"
-                          required={true}
-                        />
+                        <ImageUpload onUpload={setAadharImage} image={image3} setImage={setImage3} />
+                         
                       </div>
                     </div>
                   </div>

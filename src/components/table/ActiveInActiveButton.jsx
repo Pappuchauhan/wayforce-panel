@@ -6,10 +6,11 @@ import Switch from "react-switch";
 import AdminServices from "@/services/AdminServices";
 import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import UserServices from "@/services/UserServices";
 
 const ActiveInActiveButton = ({ id, status, option, staff }) => {
   const { setIsUpdate } = useContext(SidebarContext);
-  const handleChangeStatus = async (id, staff) => {
+  const handleChangeStatus = async (id, staff, option) => {
     // return notifyError("This feature is disabled for demo!");
     try {
       let newStatus;
@@ -18,9 +19,15 @@ const ActiveInActiveButton = ({ id, status, option, staff }) => {
       } else {
         newStatus = "Active";
       }
-      const res = await AdminServices.updateStaffStatus(id, {
-        status: newStatus,
-      });
+      if(option=='user'){
+        const res = await UserServices.updateUserStatus(id, {
+          status: newStatus,
+        });
+      }else{
+        const res = await AdminServices.updateStaffStatus(id, {
+          status: newStatus,
+        });
+      }
       setIsUpdate(true);
       notifySuccess(res.message);
       return;
@@ -32,7 +39,7 @@ const ActiveInActiveButton = ({ id, status, option, staff }) => {
   return (
     <>
       <Switch
-        onChange={() => handleChangeStatus(id, staff)}
+        onChange={() => handleChangeStatus(id, staff, option)}
         checked={status === "Active" ? true : false}
         className="react-switch md:ml-0"
         uncheckedIcon={
