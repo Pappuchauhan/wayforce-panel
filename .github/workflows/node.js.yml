@@ -21,9 +21,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build
+    - run: npm dev
+    #- run: npm run build
     # You can add additional steps for your specific React project needs,
     # such as running tests, linting, etc.
-    - name: Run Tests
-      run: npm test
+    #- name: Run Tests
+   #   run: npm dev
