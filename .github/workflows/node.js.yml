@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm i
     - run: npm install -g create-vite@latest  # Install the latest version of Vite
     - run: create-vite my-vite-app --template react-ts  # Create a new Vite React app
     - run: cd my-vite-app
