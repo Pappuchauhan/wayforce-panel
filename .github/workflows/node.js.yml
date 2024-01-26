@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x]
         # Add or modify Node.js versions based on your project requirements
 
     steps:
@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm dev
+    - run: npm run dev
     #- run: npm run build
     # You can add additional steps for your specific React project needs,
     # such as running tests, linting, etc.
