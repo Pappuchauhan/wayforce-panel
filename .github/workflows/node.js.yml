@@ -1,0 +1,29 @@
+name: Vite React CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [18.8]  # Adjust the Node.js version as needed
+
+    steps:
+    - uses: actions/checkout@v2  # Use the latest version of the checkout action
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm install -g create-vite@latest  # Install the latest version of Vite
+    - run: create-vite my-vite-app --template react-ts  # Create a new Vite React app
+    - run: cd my-vite-app
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
