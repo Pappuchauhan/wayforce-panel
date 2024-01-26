@@ -1,17 +1,17 @@
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useLocation } from "react-router"; 
+import { useForm, Controller } from "react-hook-form";
+import { useLocation } from "react-router";
 
 //internal import
 import { AdminContext } from "@/context/AdminContext";
 import { SidebarContext } from "@/context/SidebarContext";
-import CatServices from "@/services/MyCategoryServices";
+import PageServices from "@/services/PageServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 // import useTranslationValue from "./useTranslationValue";
 
-const useMyCategorySubmit = (id) => {
+const usePageSubmit = (id) => {
   const { state } = useContext(AdminContext);
   const { adminInfo } = state;
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } =
@@ -21,14 +21,13 @@ const useMyCategorySubmit = (id) => {
   const [resData, setResData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [categoryImage, setCategoryImage] = useState("");
-
   const location = useLocation();
   // const { handlerTextTranslateHandler } = useTranslationValue();
 
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     clearErrors,
     formState: { errors },
@@ -43,23 +42,21 @@ const useMyCategorySubmit = (id) => {
       //   language
       // );
 
-      const formData = new FormData(); 
-      formData.append('name', data.name);
-      formData.append('status', data.status);
-      formData.append('price', data.price);
-      formData.append('image', categoryImage);
-
-       
+      const categoryData = {
+        name: data.name,
+        description: data.description,
+        status: data.status       
+      };
 
       if (id) {
         // console.log('id is ',id)
-        const res = await CatServices.updateCategory(id, formData);
+        const res = await PageServices.updatePage(id, categoryData);
         setIsUpdate(true);
         setIsSubmitting(false);
         notifySuccess(res.message);
         closeDrawer();
       } else {
-        const res = await CatServices.addCategory(formData);
+        const res = await PageServices.addPage(categoryData);
         setIsUpdate(true);
         setIsSubmitting(false);
         notifySuccess(res.message);
@@ -72,13 +69,13 @@ const useMyCategorySubmit = (id) => {
     }
   };
 
-  const getCategoryData = async () => {
+  const getPageData = async () => {
     try {
-      const res = await CatServices.getCategoryById(id);
+      const res = await PageServices.getPageById(id);
       if (res) {
         setResData(res);
         setValue("name", res.data.name);
-        setValue("price", res.data.price);
+        setValue("description", res.data.description);
         setValue("status", res.data.status);  
          
       }
@@ -99,11 +96,11 @@ const useMyCategorySubmit = (id) => {
     if (!isDrawerOpen) {
       setResData({});
       setValue("name");
-      setValue("price");
+      setValue("description");
       setValue("status");
        
       clearErrors("name");
-      clearErrors("price");
+      clearErrors("description");
       clearErrors("status");
        
       setLanguage(lang);
@@ -111,7 +108,7 @@ const useMyCategorySubmit = (id) => {
       return;
     }
     if (id) {
-      getCategoryData();
+      getPageData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, setValue, isDrawerOpen, adminInfo.email, clearErrors]);
@@ -125,9 +122,9 @@ const useMyCategorySubmit = (id) => {
     errors,  
     isSubmitting,
     handleSelectLanguage,
-    categoryImage, 
-    setCategoryImage
+    Controller,
+    control
   };
 };
 
-export default useMyCategorySubmit;
+export default usePageSubmit;

@@ -1,21 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Card, CardBody, Input, Select } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the styles for Quill
+
 
 //internal import
 
 import Error from "@/components/form/others/Error";
 import Title from "@/components/form/others/Title";
 import InputArea from "@/components/form/input/InputArea";
-import useMyCategorySubmit from "@/hooks/useMyCategorySubmit";
+import usePageSubmit from "@/hooks/usePageSubmit";
 import SelectRole from "@/components/form/selectOption/SelectRole";
 import DrawerButton from "@/components/form/button/DrawerButton";
 import LabelArea from "@/components/form/selectOption/LabelArea";
 import Uploader from "@/components/image-uploader/Uploader";
-import ImageUpload from "@/components/common/ImageUpload";
 
-const MyCategoryDrawer = ({ id }) => {
+const PageDrawer = ({ id }) => {
   const {
     register,
     handleSubmit,
@@ -27,20 +29,11 @@ const MyCategoryDrawer = ({ id }) => {
     selectedDate,
     setSelectedDate,
     handleSelectLanguage,
-    categoryImage, 
-    setCategoryImage
-  } = useMyCategorySubmit(id);
+    Controller,
+    control
+  } = usePageSubmit(id);
   const { t } = useTranslation();
- 
-  
-  const handleFileUpload = (file) => {
-    // Handle the uploaded file here
-    console.log('Uploaded file:', file);
-    // You can perform additional actions with the file, such as sending it to a server
-  };
-  useEffect(() => {
-    console.log(categoryImage);
-  }, [categoryImage]);
+
   return (
     <>
       <div className="w-full relative p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
@@ -48,15 +41,15 @@ const MyCategoryDrawer = ({ id }) => {
           <Title
             register={register}
             
-            title={"Update Category"}
-            description={t("Updated your category necessary information from here")}
+            title={"Update Page"}
+            description={t("Updated your page necessary information from here")}
           />
         ) : (
           <Title
             register={register}
             
-            title={"Add Category"}
-            description={"Add your category necessary information from here "}
+            title={"Add Page"}
+            description={"Add your page necessary information from here "}
           />
         )}
       </div>
@@ -66,14 +59,6 @@ const MyCategoryDrawer = ({ id }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
                  
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <LabelArea label="User Image" />
-                    <div className="col-span-8 sm:col-span-4">
-                    
-                   {/* First instance of ImageUpload */}
-                  <ImageUpload name="image1" onUpload={(file) => setCategoryImage(file)} /> 
-                    </div>
-                </div>
 
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Name" />
@@ -83,26 +68,11 @@ const MyCategoryDrawer = ({ id }) => {
                       label="Name"
                       name="name"
                       type="text" 
-                      placeholder="Category name"
+                      placeholder="Page name"
                     />
                     <Error errorName={errors.name} />
                   </div>
                 </div>
-
-                <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                  <LabelArea label="Price" />
-                  <div className="col-span-8 sm:col-span-4">
-                    <InputArea
-                      register={register}
-                      label="Price"
-                      name="price"
-                      type="text" 
-                      placeholder="Category price"
-                    />
-                    <Error errorName={errors.name} />
-                  </div>
-                </div>
-  
 
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Status" />
@@ -122,10 +92,37 @@ const MyCategoryDrawer = ({ id }) => {
                   </div>
                 </div>
 
+                <div className="grid   gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <LabelArea label="Description" />
+                  <div className="col-span-12 sm:col-span-4">
+                  <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <ReactQuill
+              theme="snow"
+              {...field}
+              modules={{
+                toolbar: [
+                  ['bold', 'italic', 'underline', 'strike'], // Customize the toolbar as needed
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  [{ indent: '-1' }, { indent: '+1' }],
+                  ['link'],
+                  ['clean'],
+                ],
+              }}
+              style={{ height: '300px' }}
+            />
+          )}
+        />
+                    
+                  </div>
+                </div>
+  
+
                 
               </div>
-
-              
 
               <DrawerButton id={id} title="Category" isSubmitting={isSubmitting} />
             </form>
@@ -136,4 +133,4 @@ const MyCategoryDrawer = ({ id }) => {
   );
 };
 
-export default MyCategoryDrawer;
+export default PageDrawer;

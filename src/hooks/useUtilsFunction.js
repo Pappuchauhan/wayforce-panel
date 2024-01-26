@@ -56,7 +56,7 @@ const useUtilsFunction = () => {
     return data !== undefined ? data : "!#";
   };
 
-  const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "₹";
 
   useEffect(() => {
     // console.log("globalSetting", globalSetting);

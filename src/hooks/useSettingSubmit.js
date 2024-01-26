@@ -37,7 +37,7 @@ const useSettingSubmit = (id) => {
         name: "globalSetting",
         setting: {
           //for common setting
-          number_of_image_per_product: data.number_of_image_per_product,
+          commission: data.commission,
           shop_name: data.shop_name,
           address: data.address,
           company_name: data.company_name,
@@ -45,11 +45,7 @@ const useSettingSubmit = (id) => {
           post_code: data.post_code,
           contact: data.contact,
           email: data.email,
-          website: data.website,
-          receipt_size: data.receipt_size,
-          default_currency: data.default_currency,
-          default_time_zone: data.default_time_zone,
-          default_date_format: data.default_date_format,
+          website: data.website
         },
       };
 
@@ -66,7 +62,7 @@ const useSettingSubmit = (id) => {
         setIsSubmitting(false);
         dispatch(removeSetting("globalSetting"));
 
-        window.location.reload();
+       // window.location.reload();
         notifySuccess(res.message);
       } else {
         const res = await SettingServices.addGlobalSetting(settingData);
@@ -77,7 +73,7 @@ const useSettingSubmit = (id) => {
         setIsUpdate(true);
         setIsSubmitting(false);
 
-        window.location.reload();
+       // window.location.reload();
         notifySuccess(res.message);
       }
     } catch (err) {
@@ -94,10 +90,7 @@ const useSettingSubmit = (id) => {
         // console.log("res>>>", res);
         if (res) {
           setIsSave(false);
-          setValue(
-            "number_of_image_per_product",
-            res.number_of_image_per_product
-          );
+           
           setValue("shop_name", res.shop_name);
           setValue("address", res.address);
           setValue("company_name", res.company_name);
@@ -106,10 +99,7 @@ const useSettingSubmit = (id) => {
           setValue("contact", res.contact);
           setValue("email", res.email);
           setValue("website", res.website);
-          setValue("receipt_size", res.receipt_size);
-          setValue("default_currency", res.default_currency);
-          setValue("default_time_zone", res?.default_time_zone);
-          setValue("default_date_format", res?.default_date_format);
+          setValue("commission", res.commission); 
         }
       } catch (err) {
         notifyError(err?.response?.data?.message || err?.message);

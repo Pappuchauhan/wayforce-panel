@@ -12,19 +12,20 @@ const OrderServices = {
     // source,
     method,
     startDate,
-    endDate,
+    endDate, 
     // download = "",
   }) => {
     const searchName = customerName !== null ? customerName : "";
     const searchStatus = status !== null ? status : "";
-    const searchDay = day !== null ? day : "";
+    const state = day !== null ? day : "";
     // const searchSource = source !== null ? source : "";
-    const searchMethod = method !== null ? method : "";
+    const city = method !== null ? method : "";
     const startD = startDate !== null ? startDate : "";
     const endD = endDate !== null ? endDate : "";
+    //const stateD = searchState !== null ? searchState : "";
 
     return requests.get(
-      `/orders?customerName=${searchName}&status=${searchStatus}&day=${searchDay}&page=${page}&limit=${limit}&startDate=${startD}&endDate=${endD}&method=${searchMethod}`,
+      `/orders?customerName=${searchName}&status=${searchStatus}&page=${page}&limit=${limit}&startDate=${startD}&endDate=${endD}&city=${city}&state=${state}`,
       body,
       headers
     );

@@ -22,6 +22,8 @@ import Invoice from "@/components/invoice/Invoice";
 import Loading from "@/components/preloader/Loading";
 import logoDark from "@/assets/img/logo/logo-dark.svg";
 import logoLight from "@/assets/img/logo/logo-color.svg";
+import WayforceLogo from "@/assets/img/logo/wayforce-logo.png";
+
 import PageTitle from "@/components/Typography/PageTitle";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
 import InvoiceForDownload from "@/components/invoice/InvoiceForDownload";
@@ -46,7 +48,7 @@ const OrderInvoice = () => {
 
   return (
     <>
-      <PageTitle> {t("InvoicePageTittle")} </PageTitle>
+      <PageTitle> Invoice </PageTitle>
 
       <div
         ref={printRef}
@@ -56,61 +58,62 @@ const OrderInvoice = () => {
           <div className="">
             <div className="flex lg:flex-row md:flex-row flex-col lg:items-center justify-between pb-4 border-b border-gray-50 dark:border-gray-700 dark:text-gray-300">
               <h1 className="font-bold font-serif text-xl uppercase">
-                {t("InvoicePageTittle")}
+                {"Invoice"}
                 <p className="text-xs mt-1 text-gray-500">
-                  {t("InvoiceStatus")}
+                  {"Status"}
                   <span className="pl-2 font-medium text-xs capitalize">
                     {" "}
-                    <Status status={data.status} />
+                    <Status status={data.orderStatus} />
                   </span>
                 </p>
               </h1>
               <div className="lg:text-right text-left">
                 <h2 className="lg:flex lg:justify-end text-lg font-serif font-semibold mt-4 lg:mt-0 lg:ml-0 md:mt-0">
                   {mode === "dark" ? (
-                    <img src={logoDark} alt="kachabazar" width="110" />
+                    <img src={WayforceLogo} alt="Wayforce" width="110" />
                   ) : (
-                    <img src={logoLight} alt="kachabazar" width="110" />
+                    <img src={WayforceLogo} alt="Wayforce" width="110" />
                   )}
                 </h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                  {globalSetting?.address} <br />
-                  {globalSetting?.contact} <br />{" "}
-                  <span> {globalSetting?.email} </span> <br />
-                  {globalSetting?.website}
+                  {"59 Station Rd, Purls Bridge, United Kingdom"} <br />
+                  {"8743094991"} <br />{" "}
+                  <span> {"pappuchauhan68@gmail.com"} </span> <br />
+                  {"https://wayforce.in/"}
                 </p>
               </div>
             </div>
             <div className="flex lg:flex-row md:flex-row flex-col justify-between pt-4">
               <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
                 <span className="font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoiceDate")}
+                  {"Invoice Date"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {showDateFormat(data?.createdAt)}
+                  {data?.date}
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
                 <span className="font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoiceNo")}
+                  {"INVOICE NO"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  #{data?.invoice}
+                  #{data?.orderId}
                 </span>
               </div>
               <div className="flex flex-col lg:text-right text-left">
                 <span className="font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoiceTo")}
+                  {"INVOICE TO"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {data?.user_info?.name} <br />
-                  {data?.user_info?.email}{" "}
-                  <span className="ml-2">{data?.user_info?.contact}</span>
+                  {data?.employerName} <br />
+                  {data?.EmpEmail}
+                  <span className="ml-2">{data?.EmpMobile}</span>
                   <br />
-                  {data?.user_info?.address?.substring(0, 30)}
+                  {data?.EmpAddressLine1?.substring(0, 30)} {" "}
+                  {data?.EmpAddressLine2?.substring(0, 30)}
                   <br />
-                  {data?.user_info?.city}, {data?.user_info?.country},{" "}
-                  {data?.user_info?.zipCode}
+                  {data?.EmpCity}, {data?.EmpCountry},{" "}
+                  {data?.EmpPinCode}
                 </span>
               </div>
             </div>
@@ -126,15 +129,15 @@ const OrderInvoice = () => {
               <Table>
                 <TableHeader>
                   <tr>
-                    <TableCell>{t("Sr")}</TableCell>
-                    <TableCell>Product Title</TableCell>
+                    <TableCell>START TIME</TableCell>
+                    <TableCell>END TIME</TableCell>
                     <TableCell className="text-center">
-                      {t("Quantity")}
+                    WORKING HOURS
                     </TableCell>
                     <TableCell className="text-center">
-                      {t("ItemPrice")}
+                    BOOKED PAYMENT
                     </TableCell>
-                    <TableCell className="text-right">{t("Amount")}</TableCell>
+                    <TableCell className="text-right">TOTAL PAYMENT</TableCell>
                   </tr>
                 </TableHeader>
                 <Invoice
@@ -152,7 +155,7 @@ const OrderInvoice = () => {
             <div className="flex lg:flex-row md:flex-row flex-col justify-between">
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
                 <span className="mb-1 font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoicepaymentMethod")}
+                  {"PAYMENT METHOD"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
                   {data.paymentMethod}
@@ -160,16 +163,18 @@ const OrderInvoice = () => {
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
                 <span className="mb-1 font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("ShippingCost")}
+                  {"GST"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
                   {currency}
-                  {getNumberTwo(data.shippingCost)}
+                  { 0.00
+                  //getNumberTwo(data.shippingCost)
+                  }
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
                 <span className="mb-1 font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoiceDicount")}
+                  {"DISCOUNT"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
                   {currency}
@@ -178,11 +183,11 @@ const OrderInvoice = () => {
               </div>
               <div className="flex flex-col sm:flex-wrap">
                 <span className="mb-1 font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-500 block">
-                  {t("InvoiceTotalAmount")}
+                  {"TOTAL AMOUNT"}
                 </span>
                 <span className="text-xl font-serif font-bold text-red-500 dark:text-emerald-500 block">
                   {currency}
-                  {getNumberTwo(data.total)}
+                  {getNumberTwo(data.totalPayment)}
                 </span>
               </div>
             </div>

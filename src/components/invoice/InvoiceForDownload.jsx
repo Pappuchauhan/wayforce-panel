@@ -10,7 +10,7 @@ import {
 } from "@react-pdf/renderer";
 import { useTranslation } from "react-i18next";
 import logoDark from "@/assets/img/logo/logo-color.png";
-
+import WayforceLogo from "@/assets/img/logo/wayforce-logo.png";
 Font.register({
   family: "Open Sans",
   fonts: [
@@ -294,32 +294,32 @@ const InvoiceForDownload = ({
               </Text>
               <Text style={styles.info}>
                 Status :{" "}
-                {data?.status === "Merged" && (
-                  <Text style={{ color: "#eab308" }}>{data?.status}</Text>
+                {data?.orderStatus === "Merged" && (
+                  <Text style={{ color: "#eab308" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Pending" && (
-                  <Text style={{ color: "#eab308" }}>{data?.status}</Text>
+                {data?.orderStatus === "Pending" && (
+                  <Text style={{ color: "#eab308" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Processing" && (
-                  <Text style={{ color: "#14b8a6" }}>{data?.status}</Text>
+                {data?.orderStatus === "Processing" && (
+                  <Text style={{ color: "#14b8a6" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "POS-Completed" && (
-                  <Text style={{ color: "#14b8a6" }}>{data?.status}</Text>
+                {data?.orderStatus === "POS-Completed" && (
+                  <Text style={{ color: "#14b8a6" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Fully Returned" && (
-                  <Text style={{ color: "#14b8a6" }}>{data?.status}</Text>
+                {data?.orderStatus === "Fully Returned" && (
+                  <Text style={{ color: "#14b8a6" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Partial Returned" && (
-                  <Text style={{ color: "#14b8a6" }}>{data?.status}</Text>
+                {data?.orderStatus === "Partial Returned" && (
+                  <Text style={{ color: "#14b8a6" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Delivered" && (
-                  <Text style={{ color: "#22c55e" }}>{data?.status}</Text>
+                {data?.orderStatus === "Completed" && (
+                  <Text style={{ color: "#22c55e" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Cancel" && (
-                  <Text style={{ color: "#f43f5e" }}>{data?.status}</Text>
+                {data?.orderStatus === "Cancel" && (
+                  <Text style={{ color: "#f43f5e" }}>{data?.orderStatus}</Text>
                 )}
-                {data?.status === "Deleted" && (
-                  <Text style={{ color: "#f43f5e" }}>{data?.status}</Text>
+                {data?.orderStatus === "Deleted" && (
+                  <Text style={{ color: "#f43f5e" }}>{data?.orderStatus}</Text>
                 )}
               </Text>
               {globalSetting?.vat_number && (
@@ -336,23 +336,25 @@ const InvoiceForDownload = ({
 
             <View style={{ alignItems: "flex-end" }}>
               <Text
-                style={{
-                  flexDirection: "row",
-                  marginLeft: 80,
+                style={{ 
                   marginTop: 35,
                   textAlign: "right",
                 }}
               >
+                {/*
                 <Image
-                  src={logoDark}
-                  alt="kachabazar"
+                  src={WayforceLogo}
+                  alt="Wayforce"
                   style={{
-                    width: 90,
+                    width: '100',
                     alignItems: "right",
                     textAlign: "right",
                     float: "right",
                   }}
+                 
                 />
+                 */
+              }
               </Text>
               <Text
                 style={{
@@ -362,19 +364,19 @@ const InvoiceForDownload = ({
                   textAlign: "right",
                 }}
               >
-                {globalSetting?.address}
+                {"59 Station Rd, Purls Bridge, United Kingdom"}
                 {"\n"}
-                {globalSetting?.contact}
+                {"8743094991"}
                 {"\n"}
-                {globalSetting?.email}
+                {"pappuchauhan68@gmail.com"}
                 {"\n"}
-                {globalSetting?.website}
+                {"https://wayforce.in/"}
               </Text>
             </View>
           </View>
 
           <View style={styles.invoiceSecond}>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={[styles.title, { fontSize: 10 }]}>{t("date")}</Text>
               <Text
                 style={{
@@ -383,15 +385,15 @@ const InvoiceForDownload = ({
                   textAlign: "left",
                 }}
               >
-                {data?.createdAt !== undefined && (
-                  <Text>{showDateFormat(data?.createdAt)}</Text>
+                {data?.date !== undefined && (
+                  <Text>{data?.date}</Text>
                 )}
               </Text>
             </View>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={styles.title}>
                 <Text
-                  style={{ width: "25%", alignItems: "baseline", fontSize: 10 }}
+                  style={{ width: "30%", alignItems: "baseline", fontSize: 10 }}
                 >
                   {t("InvoiceNo")}
                 </Text>
@@ -407,14 +409,14 @@ const InvoiceForDownload = ({
                       textAlign: "left",
                     }}
                   >
-                    #{data?.invoice}
+                    #{data?.orderId}
                   </Text>
                 </Text>
               </Text>
             </View>
 
             <View
-              style={{ width: "25%", alignItems: "baseline", float: "right" }}
+              style={{ width: "40%", alignItems: "baseline", float: "right" }}
             >
               <Text style={styles.title}>
                 <Text
@@ -445,16 +447,17 @@ const InvoiceForDownload = ({
                       textTransform: "lowercase",
                     }}
                   >
-                    {data?.user_info?.name}
+                    {data?.employerName}
                     {"\n"}
-                    {data?.user_info?.contact}
+                    {data?.EmpMobile}
                     {"\n"}
-                    {data?.user_info?.email}
+                    {data?.EmpEmail}
                     {"\n"}
-                    {data?.user_info?.address?.substring(0, 30)}
+                    {data?.EmpAddressLine1?.substring(0, 30)}
+                    {data?.EmpAddressLine2?.substring(0, 30)}
                     {"\n"}
-                    {data?.user_info?.city}, {data?.user_info?.country},{" "}
-                    {data?.user_info?.zipCode}
+                    {data?.EmpCity}, {data?.EmpCountry},{" "}
+                    {data?.EmpPinCode}
                   </Text>
                 </Text>
               </Text>
@@ -480,7 +483,7 @@ const InvoiceForDownload = ({
                       textAlign: "left",
                     }}
                   >
-                    Product Title
+                    START TIME	
                   </Text>
                 </Text>
               </View>
@@ -496,7 +499,7 @@ const InvoiceForDownload = ({
                       textAlign: "center",
                     }}
                   >
-                    {t("Quantity")}
+                    {"END TIME"}
                   </Text>
                 </Text>
               </View>
@@ -512,7 +515,7 @@ const InvoiceForDownload = ({
                       textAlign: "left",
                     }}
                   >
-                    {t("ItemPrice")}
+                    {"WORKING HOURS"}
                   </Text>
                 </Text>
               </View>
@@ -529,16 +532,16 @@ const InvoiceForDownload = ({
                       textAlign: "right",
                     }}
                   >
-                    {t("Amount")}
+                    {"TOTAL PAYMENT"}
                   </Text>
                 </Text>
               </View>
             </View>
-            {data?.cart?.map((item, i) => (
-              <View key={i} style={styles.tableRow}>
+           
+              <View   style={styles.tableRow}>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {item.title?.substring(0, 20)}
+                    {data.startTime}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>
@@ -552,7 +555,7 @@ const InvoiceForDownload = ({
                         fontFamily: "Open Sans",
                       }}
                     >
-                      {item.quantity}
+                      {data.endTime}
                     </Text>
                   </Text>
                 </View>
@@ -562,12 +565,12 @@ const InvoiceForDownload = ({
                       style={{
                         fontSize: 10,
                         fontWeight: "bold",
-                        textAlign: "left",
+                        textAlign: "center",
                         fontFamily: "Open Sans",
                       }}
                     >
-                      {currency}
-                      {getNumberTwo(item.price)}
+                       
+                       {data.workingHours}
                     </Text>
                   </Text>
                 </View>
@@ -583,53 +586,40 @@ const InvoiceForDownload = ({
                         fontFamily: "Open Sans",
                       }}
                     >
-                      {currency}
-                      {getNumberTwo(item.price * item.quantity)}
+                      {"Rs."}
+                      {getNumberTwo( data.totalPayment)}
                     </Text>
                   </Text>
                 </View>
               </View>
-            ))}
+          
           </View>
 
           <View style={styles.invoiceThird}>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={styles.title}>{t("InvoicepaymentMethod")}</Text>
               <Text style={{ fontSize: 10, color: "#0e9f6e" }}>
                 {data?.paymentMethod}
               </Text>
             </View>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+             
+
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={styles.title}>
-                <Text style={{ width: "25%", alignItems: "baseline" }}>
-                  Sub Total
-                </Text>
+                <Text style={{ textAlign: "left" }}>{"GST"}</Text>
               </Text>
               <Text style={styles.title}>
                 <Text style={{ textAlign: "left" }}>
                   <Text style={styles.infoCost}>
-                    {currency}
-
-                    {getNumberTwo(data?.subTotal)}
+                    {"Rs."}
+                    { 0.00
+                    //getNumberTwo(data?.shippingCost)
+                  }
                   </Text>
                 </Text>
               </Text>
             </View>
-
-            <View style={{ width: "25%", alignItems: "baseline" }}>
-              <Text style={styles.title}>
-                <Text style={{ textAlign: "left" }}>{t("ShippingCost")}</Text>
-              </Text>
-              <Text style={styles.title}>
-                <Text style={{ textAlign: "left" }}>
-                  <Text style={styles.infoCost}>
-                    {currency}
-                    {getNumberTwo(data?.shippingCost)}
-                  </Text>
-                </Text>
-              </Text>
-            </View>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={styles.title}>
                 <Text style={{ textAlign: "left" }}>{t("discount")} </Text>
               </Text>
@@ -637,28 +627,28 @@ const InvoiceForDownload = ({
                 <Text style={{ textAlign: "left" }}>
                   <Text style={styles.infoCost}>
                     {" "}
-                    {currency}
+                    {"Rs."}
                     {getNumberTwo(data?.discount)}
                   </Text>
                 </Text>
               </Text>
             </View>
-            <View style={{ width: "25%", alignItems: "baseline" }}>
+
+            <View style={{ width: "30%", alignItems: "baseline" }}>
               <Text style={styles.title}>
-                <Text
-                  style={{ width: "45%", textAlign: "right", float: "left" }}
-                >
-                  Total
-                </Text>
+                <Text style={{ textAlign: "right",  float: "left" }}>{"TOTAL AMOUNT"} </Text>
               </Text>
               <Text style={styles.title}>
-                <Text style={styles.totalAmount}>
-                  {currency}
-
-                  {getNumberTwo(data?.total)}
+                <Text style={{ textAlign: "right",  float: "left" }}>
+                  <Text style={styles.total}>
+                    {" "}
+                    {"Rs."}
+                    {getNumberTwo(data?.totalPayment)}
+                  </Text>
                 </Text>
               </Text>
             </View>
+ 
           </View>
         </Page>
       </Document>

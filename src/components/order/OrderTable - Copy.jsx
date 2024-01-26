@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 
 import { useTranslation } from "react-i18next";
-import { FiZoomIn, FiDownload } from "react-icons/fi";
+import { FiZoomIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 //internal import
@@ -26,85 +26,50 @@ const OrderTable = ({ orders }) => {
           <TableRow key={i + 1}>
             <TableCell>
               <span className="font-semibold uppercase text-xs">
-                {order?.orderId}
+                {order?.invoice}
               </span>
             </TableCell>
 
             <TableCell>
               <span className="text-sm">
-              {order?.workingHours}
+                {showDateTimeFormat(order?.updatedDate)}
               </span>
             </TableCell>
 
             <TableCell className="text-xs">
-              <span className="text-sm">{currency}
-                {getNumberTwo(order?.bookedPayment)}</span>{" "}
-            </TableCell>
-
-            <TableCell> 
-                <Status status={order?.paymentStatus} />             
+              <span className="text-sm">{order?.user_info?.name}</span>{" "}
             </TableCell>
 
             <TableCell>
               <span className="text-sm font-semibold">
-              { order?.date //showDateTimeFormat(order?.date)
-            }
-              </span>
-            </TableCell>
-            <TableCell>
-              <span className="text-sm font-semibold">
-              {order?.startTime}
-              </span>
-            </TableCell>
-            <TableCell>
-              <span className="text-sm font-semibold">
-              {order?.endTime}
+                {order?.paymentMethod}
               </span>
             </TableCell>
 
             <TableCell>
-              <span className="text-sm">
-              {order?.category}
+              <span className="text-sm font-semibold">
+                {currency}
+                {getNumberTwo(order?.total)}
               </span>
             </TableCell>
-            <TableCell>
-              <span className="text-sm">
-              {order?.manpowerName}
-              </span>
-            </TableCell>
-            <TableCell>
-              <span className="text-sm">
-              {order?.employerName}
-              </span>
-            </TableCell> 
 
             <TableCell className="text-xs">
-              <Status status={order?.orderStatus} />
+              <Status status={order?.status} />
             </TableCell>
 
-            
+            <TableCell className="text-center">
+              <SelectStatus id={order._id} order={order} />
+            </TableCell>
 
             <TableCell className="text-right flex justify-end">
               <div className="flex justify-between items-center">
-                { /*<PrintReceipt orderId={order._id} />*/
-}
+                <PrintReceipt orderId={order._id} />
 
                 <span className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600">
-                  
-                  <Link to={`/order/details/${order._id}`}>
-                    <Tooltip
-                      id="view"
-                      Icon={FiZoomIn}
-                      title={t("ViewInvoice")}
-                      bgColor="#059669"
-                    />
-                  </Link>
-                  </span>
-                  <span className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600">
                   <Link to={`/order/${order._id}`}>
                     <Tooltip
                       id="view"
-                      Icon={FiDownload}
+                      Icon={FiZoomIn}
                       title={t("ViewInvoice")}
                       bgColor="#059669"
                     />

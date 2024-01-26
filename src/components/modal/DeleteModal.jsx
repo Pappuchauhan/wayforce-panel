@@ -20,6 +20,7 @@ import CurrencyServices from "@/services/CurrencyServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import CatServices from "@/services/MyCategoryServices";
 import UserServices from "@/services/UserServices";
+import PageServices from "@/services/PageServices";
 
 const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
   const { isModalOpen, closeModal, setIsUpdate } = useContext(SidebarContext);
@@ -130,9 +131,20 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
         closeModal();
         setServiceId();
       }
-
+      
       if (location.pathname === "/user") { 
         UserServices.deleteUser(id)
+          .then((res) => {
+            setIsUpdate(true);
+            notifySuccess(res.message);
+          })
+          .catch((err) => notifyError(err.message));
+        closeModal();
+        setServiceId();
+      }
+
+      if (location.pathname === "/page") { 
+        PageServices.deletePage(id)
           .then((res) => {
             setIsUpdate(true);
             notifySuccess(res.message);

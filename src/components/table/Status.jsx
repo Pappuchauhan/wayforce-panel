@@ -11,7 +11,7 @@ const Status = ({ status }) => {
           <Badge type="warning">{status}</Badge>
         )}
         {status === "Processing" && <Badge>{status}</Badge>}
-        {(status === "Delivered" || status === "Active") && (
+        {(status === "Completed" || status === "Active") && (
           <Badge type="success">{status}</Badge>
         )}
         {status === "Cancel" && <Badge type="danger">{status}</Badge>}

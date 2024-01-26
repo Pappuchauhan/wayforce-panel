@@ -10,6 +10,7 @@ import CouponServices from "@/services/CouponServices";
 import ProductServices from "@/services/ProductServices";
 import CategoryServices from "@/services/CategoryServices";
 import CatServices from "@/services/MyCategoryServices";
+import PageServices from "@/services/PageServices";
 import { SidebarContext } from "@/context/SidebarContext";
 import { notifySuccess, notifyError } from "@/utils/toast";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
@@ -44,6 +45,17 @@ const MainModal = ({ id, title }) => {
     }
     if (location.pathname === "/my-category") { 
       CatServices.deleteCategory(id)
+        .then((res) => {
+          setIsUpdate(true);
+          notifySuccess(res.message);
+        })
+        .catch((err) => notifyError(err.message));
+      closeModal();
+      setServiceId();
+    }
+console.log("sdf");
+    if (location.pathname === "/page") { 
+      PageServices.deletePage(id)
         .then((res) => {
           setIsUpdate(true);
           notifySuccess(res.message);

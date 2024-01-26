@@ -36,15 +36,13 @@ const CouponDrawer = ({ id }) => {
       <div className="w-full relative  p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 ">
         {id ? (
           <Title
-            register={register}
-            handleSelectLanguage={handleSelectLanguage}
+            register={register} 
             title={t("UpdateCoupon")}
             description={t("UpdateCouponDescription")}
           />
         ) : (
           <Title
-            register={register}
-            handleSelectLanguage={handleSelectLanguage}
+            register={register} 
             title={t("AddCoupon")}
             description={t("AddCouponDescription")}
           />

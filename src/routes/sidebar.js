@@ -7,6 +7,10 @@ import {
   FiSlack,
   FiGlobe,
   FiTarget,
+  FiSave,
+  FiFolder,
+  FiShoppingCart,
+  FiGift
 } from "react-icons/fi";
 
 /**
@@ -51,15 +55,22 @@ const sidebar = [
     icon: FiUsers,
     name: "Customers",
   },
-  {
-    path: "/orders",
-    icon: FiCompass,
-    name: "Orders",
-  },
   */
   {
+    path: "/coupons",
+    icon: FiGift,
+    name: "Coupons",
+  },
+  
+  {
+    path: "/orders",
+    icon: FiShoppingCart,
+    name: "Orders",
+  },
+  
+  {
     path: "/my-category",
-    icon: FiUsers,
+    icon: FiFolder,
     name: "Category",
   },
   {
@@ -72,12 +83,18 @@ const sidebar = [
     icon: FiUser,
     name: "OurStaff",
   },
-/*
+  {
+    path: "/page",
+    icon: FiSave,
+    name: "Page",
+  },
+
   {
     path: "/settings?settingTab=common-settings",
     icon: FiSettings,
     name: "Settings",
   },
+  /*
   {
     icon: FiGlobe,
     name: "International",

@@ -13,6 +13,9 @@ export const SidebarContext = createContext();
 export const SidebarProvider = ({ children }) => {
   const resultsPerPage = 20;
   const searchRef = useRef("");
+  const locationRef = useRef("");
+  const cityRef = useRef("");
+  const stateRef = useRef("");
   const invoiceRef = useRef("");
   // const dispatch = useDispatch();
 
@@ -40,6 +43,9 @@ export const SidebarProvider = ({ children }) => {
   const [navBar, setNavBar] = useState(true);
   const { i18n } = useTranslation();
   const [tabIndex, setTabIndex] = useState(0);
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [location, setLocation] = useState("");
 
   // const { socket } = useNotification();
 
@@ -70,9 +76,11 @@ export const SidebarProvider = ({ children }) => {
 
   const handleSubmitForAll = (e) => {
     e.preventDefault();
+    console.log('dfsd')
     if (!searchRef?.current?.value) return setSearchText(null);
     setSearchText(searchRef?.current?.value);
     setCategory(null);
+  
   };
 
   useEffect(() => {
@@ -182,6 +190,15 @@ export const SidebarProvider = ({ children }) => {
         navBar,
         tabIndex,
         setTabIndex,
+        locationRef,
+        cityRef,
+        stateRef,
+        setCity,
+        setState,
+        setLocation,
+        city,
+        state,
+        location
       }}
     >
       {children}

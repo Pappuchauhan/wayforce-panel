@@ -49,6 +49,15 @@ const Orders = () => {
     handleChangePage,
     handleSubmitForAll,
     resultsPerPage,
+    locationRef,
+    cityRef,
+    stateRef,
+    setCity,
+    setState,
+    setLocation,
+    state,
+    city,
+    location
   } = useContext(SidebarContext);
 
   const { t } = useTranslation();
@@ -65,6 +74,7 @@ const Orders = () => {
       startDate: startDate,
       limit: resultsPerPage,
       customerName: searchText,
+      searchState: state,
     })
   );
 
@@ -85,6 +95,9 @@ const Orders = () => {
         startDate: startDate,
         limit: data?.totalDoc,
         customerName: searchText,
+        city: city,
+        state: state,
+        location: location, 
       });
 
       // console.log("handleDownloadOrders", res);
@@ -137,7 +150,7 @@ const Orders = () => {
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody>
           <form onSubmit={handleSubmitForAll}>
-            <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-5 py-2">
+            <div className="hidden grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-5 py-2">
               <div>
                 <Input
                   ref={searchRef}
@@ -214,6 +227,49 @@ const Orders = () => {
             </div>
 
             <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
+            <div>
+                <Label>Order Status</Label>
+                <Select onChange={(e) => setStatus(e.target.value)}>
+                  <option value="Status" defaultValue hidden>
+                    {t("Status")}
+                  </option>
+                  <option value="Pending">Pending</option>
+                  <option value="Ongoing">Ongoing</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancel">Cancel</option>
+                </Select>
+              </div>
+                  
+              <div>
+                <Label>Enter State</Label>
+                <div>
+                <Input
+                onChange={(e) => setTime(e.target.value)}
+                 
+                  type="search"
+                  name="state"
+                  placeholder="Search by State Name"
+                />
+                </div>
+              </div>
+
+              <div>
+                <Label>Enter City</Label>
+                <div>
+                <Input
+                onChange={(e) => setMethod(e.target.value)}
+                  ref={cityRef}
+                  type="text"
+                  name="city"
+                  placeholder="Search by City Name"
+                />
+                </div>
+              </div>
+               
+              
+            </div> 
+
+            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
               <div>
                 <Label>Start Date</Label>
                 <Input
@@ -286,12 +342,16 @@ const Orders = () => {
           <Table>
             <TableHeader>
               <tr>
-                <TableCell>{t("InvoiceNo")}</TableCell>
-                <TableCell>{t("TimeTbl")}</TableCell>
-                <TableCell>{t("CustomerName")}</TableCell>
-                <TableCell>{t("MethodTbl")}</TableCell>
-                <TableCell>{t("AmountTbl")}</TableCell>
-                <TableCell>{t("OderStatusTbl")}</TableCell>
+                <TableCell>Order Id</TableCell>
+                <TableCell>Working Hours</TableCell>
+                <TableCell>Booked Payment</TableCell>
+                <TableCell>Payment Status</TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell>Start Time</TableCell>
+                <TableCell>End Time</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Manpower</TableCell>
+                <TableCell>Employer</TableCell>                 
                 <TableCell>{t("ActionTbl")}</TableCell>
                 <TableCell className="text-right">{t("InvoiceTbl")}</TableCell>
               </tr>
