@@ -13,6 +13,7 @@ import useCouponSubmit from "@/hooks/useCouponSubmit";
 import DrawerButton from "@/components/form/button/DrawerButton";
 import SwitchToggle from "@/components/form/switch/SwitchToggle";
 import SwitchToggleFour from "@/components/form/switch/SwitchToggleFour";
+import ImageUpload from "../common/ImageUpload";
 
 const CouponDrawer = ({ id }) => {
   const {
@@ -28,7 +29,10 @@ const CouponDrawer = ({ id }) => {
     discountType,
     setDiscountType,
     isSubmitting,
+    couponImage, 
+    setCouponImage,
     handleSelectLanguage,
+    getValues
   } = useCouponSubmit(id);
 
   return (
@@ -36,13 +40,13 @@ const CouponDrawer = ({ id }) => {
       <div className="w-full relative  p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 ">
         {id ? (
           <Title
-            register={register} 
+            register={register}
             title={t("UpdateCoupon")}
             description={t("UpdateCouponDescription")}
           />
         ) : (
           <Title
-            register={register} 
+            register={register}
             title={t("AddCoupon")}
             description={t("AddCouponDescription")}
           />
@@ -53,13 +57,22 @@ const CouponDrawer = ({ id }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label={t("CouponBannerImage")} />
+              <LabelArea label="Category Image" />
               <div className="col-span-8 sm:col-span-4">
-                <Uploader
-                  imageUrl={imageUrl}
-                  setImageUrl={setImageUrl}
-                  folder="coupon"
+                {/* First instance of ImageUpload */} 
+                <ImageUpload
+                  name="logo"
+                  onUpload={(file) => setCouponImage(file)}
                 />
+
+                {getValues("logo") !== undefined &&
+                  getValues("logo") != "" && (
+                    <img
+                      src={getValues("logo")}
+                      alt="coupon"
+                      style={{ height: `150px` }}
+                    />
+                  )}
               </div>
             </div>
 

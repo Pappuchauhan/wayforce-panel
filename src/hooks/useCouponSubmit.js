@@ -19,6 +19,7 @@ const useCouponSubmit = (id) => {
   const [discountType, setDiscountType] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [couponImage, setCouponImage] = useState("")
   // const { handlerTextTranslateHandler } = useTranslationValue();
   const { currency } = useUtilsFunction();
 
@@ -28,6 +29,7 @@ const useCouponSubmit = (id) => {
     setValue,
     clearErrors,
     formState: { errors },
+    getValues
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -38,7 +40,7 @@ const useCouponSubmit = (id) => {
       //   data.title,
       //   language
       // );
-
+/*
       const couponData = {
         title: {
           [language]: data.title,
@@ -56,6 +58,17 @@ const useCouponSubmit = (id) => {
         },
         productType: data.productType,
       };
+*/
+      const formData = new FormData(); 
+      formData.append('title', data.title);
+      formData.append('couponCode', data.couponCode);
+      formData.append('endTime', data.endTime);
+      formData.append('minimumAmount', data.minimumAmount); 
+      formData.append('status',  published ? "show" : "hide");
+      formData.append('discountType[type]', discountType ? "percentage" : "fixed");
+      formData.append('discountType[value]',  data.discountPercentage);
+      formData.append('productType', data.productType); 
+      formData.append('logo', couponImage);
       // console.log(
       //   "couponData",
       //   couponData,
@@ -68,13 +81,13 @@ const useCouponSubmit = (id) => {
       // return;
 
       if (id) {
-        const res = await CouponServices.updateCoupon(id, couponData);
+        const res = await CouponServices.updateCoupon(id, formData);
         setIsUpdate(true);
         setIsSubmitting(false);
         notifySuccess(res.message);
         closeDrawer();
       } else {
-        const res = await CouponServices.addCoupon(couponData);
+        const res = await CouponServices.addCoupon(formData);
         setIsUpdate(true);
         setIsSubmitting(false);
         notifySuccess(res.message);
@@ -103,6 +116,7 @@ const useCouponSubmit = (id) => {
       setValue("endTime");
       setValue("discountPercentage");
       setValue("minimumAmount");
+      setValue("logo");
       setImageUrl("");
       clearErrors("title");
       clearErrors("productType");
@@ -110,6 +124,7 @@ const useCouponSubmit = (id) => {
       clearErrors("endTime");
       clearErrors("discountPercentage");
       clearErrors("minimumAmount");
+      clearErrors("logo");
       setLanguage(lang);
       setValue("language", language);
       return;
@@ -121,9 +136,10 @@ const useCouponSubmit = (id) => {
           if (res) {
             // console.log('res coupon', res);
             setResData(res);
-            setValue("title", res.title[language ? language : "en"]);
+            setValue("title", res.title);
             setValue("productType", res.productType);
             setValue("couponCode", res.couponCode);
+            setValue("logo", res.logo);
 
             setValue("endTime", dayjs(res.endTime).format("YYYY-MM-DD HH:mm"));
             setValue("discountPercentage", res.discountType?.value);
@@ -155,6 +171,8 @@ const useCouponSubmit = (id) => {
     isSubmitting,
     setDiscountType,
     handleSelectLanguage,
+    couponImage, setCouponImage,
+    getValues
   };
 };
 

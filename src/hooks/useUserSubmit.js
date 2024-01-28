@@ -37,12 +37,12 @@ const useUserSubmit = (id) => {
     setValue,
     clearErrors,
     formState: { errors },
+    getValues
   } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      //setIsSubmitting(true);
-
+      setIsSubmitting(true); 
       // const nameTranslates = await handlerTextTranslateHandler(
       //   data.name,
       //   language
@@ -50,15 +50,19 @@ const useUserSubmit = (id) => {
       //console.log(data)
       const dob = new Date(data.dob); 
       data.age = calculateAge(dob); // calculate age 
-      const spLanguage = data.speakingLanguages.map((option) => option.label); 
+      console.log(data.speakingLanguages)
+      //const spLanguage = data.speakingLanguages; 
       const formData = new FormData(); 
       formData.append('profileImage', userImage);
       formData.append('panImage', panImage);
       formData.append('aadharImage', aadharImage);
-        
-      spLanguage.forEach((language, index) => {
+     // let speakingLanguage = data.speakingLanguages;
+      //formData.append(`speakingLanguage`, data.speakingLanguages);
+      
+      data.speakingLanguages.forEach((language, index) => {
         formData.append(`speakingLanguage[${index}]`, language);
       });
+    
 
       formData.append(`address[addressLine1]`, data.addressLine1);
       formData.append(`address[addressLine2]`, data.addressLine2);
@@ -67,10 +71,11 @@ const useUserSubmit = (id) => {
       formData.append(`address[state]`, data.state);
       formData.append(`address[city]`, data.city);
       formData.append(`address[country]`, data.country); 
-
-
+      formData.append(`serviceLocation[address]`, data.slAddress); 
+      
+       
       Object.entries(data).forEach(([key, value]) => {
-        if(key!='speakingLanguages'){
+        if(key!='speakingLanguages' || key!='speakingLanguage' || key!='address' || key!='address'){
           if(value == undefined){
             formData.append(key, 0);
           }else{
@@ -81,6 +86,7 @@ const useUserSubmit = (id) => {
        
       });
       
+      console.log(formData)
     /*
       const categoryData = {
        ...data     
@@ -109,15 +115,21 @@ const useUserSubmit = (id) => {
 
   const getUserData = async () => {
     try {
-      const res = await UserServices.getUserById(id);
-      console.log(res)
+      const res = await UserServices.getUserById(id); 
       if (res) {
-        setResData(res);
+        setResData(res); 
         setValue("aadharNumber", res.data.aadharNumber);
         setValue("age", res.data.age);
         setValue("bio", res.data.bio);  
         setValue("category", res.data.category);
-        setValue("dob", res.data.dob);
+        let setDob = res.data.dob 
+        if(res.data.dob!=''){ 
+          const originalDate = new Date(res.data.dob);          
+          // Format the date to YYYY-MM-DD
+           setDob = originalDate.toISOString().split('T')[0];
+        } 
+        console.log(res.data.speakingLanguage)
+        setValue("dob", setDob);
         setValue("email", res.data.email);  
         setValue("experience", res.data.experience);
         setValue("gender", res.data.gender);
@@ -128,9 +140,26 @@ const useUserSubmit = (id) => {
         setValue("name", res.data.name);
         setValue("panCardNumber", res.data.panCardNumber);
         setValue("serviceLocation", res.data.serviceLocation);  
-        setValue("speakingLanguage", res.data.speakingLanguage);
+        setValue("spkLanguage", res.data.speakingLanguage);
         setValue("userType", res.data.userType);
         setValue("status", res.data.status);  
+        setValue("profileImage", res.data.profileImage);
+        setValue("panImage", res.data.panImage);
+        setValue("aadharImage", res.data.aadharImage);
+        setValue("wallet", res.data.wallet);  
+        setValue("isKyc", res.data.isKyc); 
+
+        setValue(`addressLine1`, res.data.address.addressLine1);
+        setValue(`addressLine2`, res.data.address.addressLine2);
+        setValue(`block`, res.data.address.block);
+        setValue(`pinCode`, res.data.address.pinCode);
+        setValue(`state`, res.data.address.state);
+        setValue(`city`, res.data.address.city);
+        setValue(`country`, res.data.address.country);
+        setValue(`slAddress`, res.data.serviceLocation.address);
+        setValue(`lati`, res.data.serviceLocation.lati);
+        setValue(`longi`, res.data.serviceLocation.longi);  
+
          
       }
     } catch (err) {
@@ -209,7 +238,9 @@ const useUserSubmit = (id) => {
     setAadharImage,
     Controller,
     control,
-    formattedDate
+    formattedDate,
+    getValues,
+    setValue
   };
 };
 

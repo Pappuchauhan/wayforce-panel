@@ -90,6 +90,8 @@ const useFilter = (data) => {
   const [delivered, setDelivered] = useState([]);
   const [status, setStatus] = useState("");
   const [role, setRole] = useState("");
+  const [userType, setUserType] = useState("");
+  
   const [time, setTime] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dataTable, setDataTable] = useState([]); //tableTable for showing on table according to filtering
@@ -218,6 +220,12 @@ const useFilter = (data) => {
     if (role) {
       services = services.filter((staff) => staff.role === role);
     }
+
+    if (userType) { 
+      services = services.filter((user) => user.userType === userType);
+    }
+
+     
     //User and Admin filtering
     if (searchUser) {
       services = services.filter(
@@ -824,6 +832,7 @@ const useFilter = (data) => {
     handleSubmitLanguage,
     handleUploadMultiple,
     handleRemoveSelectFile,
+    userType, setUserType
   };
 };
 

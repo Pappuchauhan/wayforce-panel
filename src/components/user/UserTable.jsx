@@ -39,18 +39,26 @@ const UserTable = ({ users, lang }) => {
           <TableRow key={user._id}>
             
             <TableCell>
-              <div className="flex items-center">
-                <Avatar
-                  className="hidden mr-3 md:block bg-gray-50"
-                  src={user?.profileImage}
-                  alt="user"
-                />
+
+            <div className="flex items-center">
+              {user?.profileImage ? (
+                  <Avatar
+                    className="hidden p-1 mr-2 md:block bg-gray-50 shadow-none"
+                    src={user?.profileImage}
+                    alt="product"
+                  />
+                ) : (
+                  <Avatar
+                    src={`https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png`}
+                    alt="product"
+                  />
+                )} 
                 <div>
                   <h2 className="text-sm font-medium">
                     {user?.name}
                   </h2>
                 </div>
-              </div>
+              </div>  
             </TableCell>
             <TableCell>
               <span className="text-sm">{user.gender}</span>{" "}

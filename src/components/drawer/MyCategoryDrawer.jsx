@@ -28,7 +28,8 @@ const MyCategoryDrawer = ({ id }) => {
     setSelectedDate,
     handleSelectLanguage,
     categoryImage, 
-    setCategoryImage
+    setCategoryImage,
+    getValues
   } = useMyCategorySubmit(id);
   const { t } = useTranslation();
  
@@ -47,14 +48,14 @@ const MyCategoryDrawer = ({ id }) => {
         {id ? (
           <Title
             register={register}
-            
             title={"Update Category"}
-            description={t("Updated your category necessary information from here")}
+            description={t(
+              "Updated your category necessary information from here"
+            )}
           />
         ) : (
           <Title
             register={register}
-            
             title={"Add Category"}
             description={"Add your category necessary information from here "}
           />
@@ -65,14 +66,23 @@ const MyCategoryDrawer = ({ id }) => {
           <CardBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
-                 
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <LabelArea label="User Image" />
-                    <div className="col-span-8 sm:col-span-4">
-                    
-                   {/* First instance of ImageUpload */}
-                  <ImageUpload name="image1" onUpload={(file) => setCategoryImage(file)} /> 
-                    </div>
+                <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <LabelArea label="Category Image" />
+                  <div className="col-span-8 sm:col-span-4">
+                    {/* First instance of ImageUpload */}
+                    <ImageUpload
+                      name="image1"
+                      onUpload={(file) => setCategoryImage(file)}
+                    />
+
+                    {getValues('image') !== undefined && getValues('image')!='' &&  (
+                      <img
+                        src={getValues('image')}
+                        alt="category"
+                        style={{ height: `150px` }}
+                      />
+                    )}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -82,7 +92,7 @@ const MyCategoryDrawer = ({ id }) => {
                       register={register}
                       label="Name"
                       name="name"
-                      type="text" 
+                      type="text"
                       placeholder="Category name"
                     />
                     <Error errorName={errors.name} />
@@ -96,38 +106,40 @@ const MyCategoryDrawer = ({ id }) => {
                       register={register}
                       label="Price"
                       name="price"
-                      type="text" 
+                      type="text"
                       placeholder="Category price"
                     />
                     <Error errorName={errors.name} />
                   </div>
                 </div>
-  
 
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Status" />
                   <div className="col-span-8 sm:col-span-4">
-                  <Select
-                  name="status"
-                  {...register(`status`, {
-                    required: `status is required!`,
-                  })}
-                >
-                  <option value="" defaultValue hidden> Choose Status </option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                  {/* <option value="Checkbox">Checkbox</option> */}
-                </Select>
+                    <Select
+                      name="status"
+                      {...register(`status`, {
+                        required: `status is required!`,
+                      })}
+                    >
+                      <option value="" defaultValue hidden>
+                        {" "}
+                        Choose Status{" "}
+                      </option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                      {/* <option value="Checkbox">Checkbox</option> */}
+                    </Select>
                     <Error errorName={errors.status} />
                   </div>
                 </div>
-
-                
               </div>
 
-              
-
-              <DrawerButton id={id} title="Category" isSubmitting={isSubmitting} />
+              <DrawerButton
+                id={id}
+                title="Category"
+                isSubmitting={isSubmitting}
+              />
             </form>
           </CardBody>
         </Card>

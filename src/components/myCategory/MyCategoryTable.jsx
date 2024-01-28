@@ -36,7 +36,25 @@ const MyCategoryTable = ({ staffs, lang }) => {
             
 
             <TableCell>
-              <span className="text-sm">{staff.name}</span>{" "}
+            <div className="flex items-center">
+              {staff?.image ? (
+                  <Avatar
+                    className="hidden p-1 mr-2 md:block bg-gray-50 shadow-none"
+                    src={staff?.image}
+                    alt="product"
+                  />
+                ) : (
+                  <Avatar
+                    src={`https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png`}
+                    alt="product"
+                  />
+                )} 
+                <div>
+                  <h2 className="text-sm font-medium">
+                    {staff?.name}
+                  </h2>
+                </div>
+              </div> 
             </TableCell>
             <TableCell>
               <span className="text-sm ">{staff.price}</span>

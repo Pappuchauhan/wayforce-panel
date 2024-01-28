@@ -32,6 +32,7 @@ const useMyCategorySubmit = (id) => {
     setValue,
     clearErrors,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -79,7 +80,8 @@ const useMyCategorySubmit = (id) => {
         setResData(res);
         setValue("name", res.data.name);
         setValue("price", res.data.price);
-        setValue("status", res.data.status);  
+        setValue("status", res.data.status); 
+        setValue("image", res.data.image);  
          
       }
     } catch (err) {
@@ -101,10 +103,12 @@ const useMyCategorySubmit = (id) => {
       setValue("name");
       setValue("price");
       setValue("status");
+      setValue("image");
        
       clearErrors("name");
       clearErrors("price");
       clearErrors("status");
+      clearErrors("image");
        
       setLanguage(lang);
       setValue("language", language);
@@ -126,7 +130,8 @@ const useMyCategorySubmit = (id) => {
     isSubmitting,
     handleSelectLanguage,
     categoryImage, 
-    setCategoryImage
+    setCategoryImage,
+    getValues
   };
 };
 

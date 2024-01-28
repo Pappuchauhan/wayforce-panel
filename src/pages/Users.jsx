@@ -40,7 +40,7 @@ const user = () => {
 
   const {
     userRef,
-    setRole,
+    setUserType,
     totalResults,
     resultsPerPage,
     dataTable,
@@ -83,7 +83,7 @@ const user = () => {
               ></button>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <Select onChange={(e) => setRole(e.target.value)}>
+              <Select onChange={(e) => setUserType(e.target.value)}>
                 <option value="All" defaultValue hidden>
                   {"User Type"}
                 </option>
