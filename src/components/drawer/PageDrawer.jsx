@@ -124,7 +124,7 @@ const PageDrawer = ({ id }) => {
                 
               </div>
 
-              <DrawerButton id={id} title="Category" isSubmitting={isSubmitting} />
+              <DrawerButton id={id} title="Page" isSubmitting={isSubmitting} />
             </form>
           </CardBody>
         </Card>

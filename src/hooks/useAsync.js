@@ -24,6 +24,7 @@ const useAsync = (asyncFunction) => {
     category,
     searchText,
     sortedField,
+    filter
   } = useContext(SidebarContext);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const useAsync = (asyncFunction) => {
     category,
     searchText,
     sortedField,
+    filter
   ]);
 
   return {

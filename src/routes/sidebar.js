@@ -49,13 +49,14 @@ const sidebar = [
       },
     ],
   },
-
+  */
   {
     path: "/customers",
     icon: FiUsers,
     name: "Customers",
   },
-  */
+
+ 
   {
     path: "/coupons",
     icon: FiGift,

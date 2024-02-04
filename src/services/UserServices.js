@@ -5,9 +5,35 @@ const UserServices = {
   addUser: async (body) => {
     return requests.post("/user/register", body);
   },
-  getAllUser: async (body) => {
-    return requests.get("/user", body);
+  getAllUser: async ({ body, userType, statusBy, categoryBy, stateBy, cityBy, pincodeBy, searchBy }) => {
+    let search = searchBy !== null && searchBy !== undefined ? searchBy : "";
+    let userTypeR = userType !== null && userType !== undefined ? userType : "";
+    let status = statusBy !== null && statusBy !== undefined ? statusBy : "";
+    let category = categoryBy !== null && categoryBy !== undefined ? categoryBy : "";
+    let state = stateBy !== null && stateBy !== undefined ? stateBy : "";
+    let city = cityBy !== null && cityBy !== undefined ? cityBy : "";
+    let pincode = pincodeBy !== null && pincodeBy !== undefined ? pincodeBy : "";
+     
+    
+    // Use encodeURIComponent to properly encode URL parameters
+    /*
+    search = encodeURIComponent(search); 
+    userTypeR = encodeURIComponent(userTypeR); 
+    status = encodeURIComponent(status); 
+    category = encodeURIComponent(category); 
+    state = encodeURIComponent(state); 
+    city = encodeURIComponent(city); 
+    pincode = encodeURIComponent(pincode); 
+  */
+    return requests.get(`/user?search=${search}&userType=${userTypeR}&status=${status}&category=${category}&state=${state}&city=${city}&pincode=${pincode}`, body);
   },
+  /*
+  getAllUser: async ({body,search,userType}) => {
+    const searchR = search !== null || search!==undefined  ? search : "";
+    const userTypeR = userType !== null || userType!==undefined  ? userType : "";
+    return requests.get(`/user?search=${searchR}&userType=${userTypeR}`, body);
+  },
+  */
   getUserById: async (id) => {
     return requests.get(`/user/${id}`);
   },

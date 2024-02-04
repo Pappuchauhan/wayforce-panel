@@ -1,6 +1,7 @@
 import { Avatar, TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import React from "react";
-
+import { FiZoomIn, FiDownload } from "react-icons/fi";
+import { Link } from "react-router-dom";
 //internal import
 
 import Status from "@/components/table/Status";
@@ -12,6 +13,7 @@ import DeleteModal from "@/components/modal/DeleteModal";
 import EditDeleteButton from "@/components/table/EditDeleteButton";
 import ActiveInActiveButton from "@/components/table/ActiveInActiveButton";
 import useUserSubmit from "@/hooks/useUserSubmit";
+import Tooltip from "@/components/tooltip/Tooltip";
 const UserTable = ({ users, lang }) => {
   const {
     title,
@@ -70,7 +72,7 @@ const UserTable = ({ users, lang }) => {
               <span className="text-sm ">{user.email}</span>
             </TableCell>
             <TableCell>
-              <span className="text-sm ">{user.category}</span>
+              <span className="text-sm ">{user?.category?.name}</span>
             </TableCell>
             <TableCell>
               <span className="text-sm ">{user.userType}</span>
@@ -100,6 +102,7 @@ const UserTable = ({ users, lang }) => {
  
 
             <TableCell>
+            <div className="flex justify-between items-center">
               <EditDeleteButton
                 id={user._id}
                 user={user}
@@ -108,6 +111,17 @@ const UserTable = ({ users, lang }) => {
                 handleModalOpen={handleModalOpen} 
                 title={user?.name}
               />
+              <span className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600">
+                  <Link to={`/user/details/${user._id}`}>
+                    <Tooltip
+                      id="view"
+                      Icon={FiZoomIn}
+                      title={"View User"}
+                      bgColor="#059669"
+                    />
+                  </Link>
+                </span>
+                </div>
             </TableCell>
           </TableRow>
         ))}

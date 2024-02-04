@@ -44,7 +44,7 @@ const SidebarContent = () => {
                 exact
                 to={route.path}
                 target={`${route?.outside ? "_blank" : "_self"}`}
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
+                className="px-6 py-3 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
                 // activeClassName="text-emerald-500 dark:text-gray-100"
                 activeStyle={{
                   color: "#0d9e6d",

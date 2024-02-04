@@ -46,6 +46,7 @@ export const SidebarProvider = ({ children }) => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [location, setLocation] = useState("");
+  const [filter, setFilter] = useState("");
 
   // const { socket } = useNotification();
 
@@ -198,7 +199,8 @@ export const SidebarProvider = ({ children }) => {
         setLocation,
         city,
         state,
-        location
+        location,
+        filter, setFilter
       }}
     >
       {children}
