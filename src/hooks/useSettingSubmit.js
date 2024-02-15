@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 //internal import
@@ -8,9 +8,13 @@ import SettingServices from "@/services/SettingServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useDispatch } from "react-redux";
 import { removeSetting } from "@/reduxStore/slice/settingSlice";
-
+import { sendSMS } from "@/utils/sms";
+import useFilter from "@/hooks/useFilter"; 
 const useSettingSubmit = (id) => {
   const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
+  const descInputRef = useRef(null);
+  const textInputRef = useRef(null);
   const { setIsUpdate } = useContext(SidebarContext);
   const [isSave, setIsSave] = useState(true);
 
@@ -25,8 +29,74 @@ const useSettingSubmit = (id) => {
     formState: { errors },
   } = useForm();
 
-  // console.log("errors", errors);
-  // console.log("enabledCOD", enabledCOD);
+  const { 
+    handleRemoveSelectFile,
+  } = useFilter();
+
+   
+  const onSubmitMessage = async (e) => {
+    e.preventDefault();
+     
+    try {
+      setIsSubmitting(true);
+      const description = descInputRef.current.value; 
+      const inputPhones = textInputRef.current.value; 
+      const file = fileInputRef.current.files[0];
+      const reader = new FileReader();
+      if(file){
+      reader.onload = () => {
+        const csvData = reader.result;
+        // Split CSV data into rows
+        const rows = csvData.split("\n"); 
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (row.trim() === "") {
+            continue;
+          }
+          const columns = row.split(",");
+           /*
+          sendSMS(columns[0], description, "1707161719949940074")
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.error(error.message);
+            });
+           */
+        }
+      };
+
+      reader.readAsText(file);
+    }
+    if(inputPhones!==''){
+
+      const multiplePhone = inputPhones.split(",");
+       
+      for (let i = 0; i < multiplePhone.length; i++) {
+       /*  
+        sendSMS(multiplePhone[i].trim(), description, "1707161719949940074")
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.error(error.message);
+            });
+          */
+      }
+
+    }
+
+      // console.log("global setting", settingData, "data", data);
+      // return;
+     // fileInputRef.current.handleRemoveSelectFile();
+     notifySuccess("Message sent to all users");
+      setIsSubmitting(false);
+    } catch (err) {
+      // console.log("err", err);
+      notifyError(err?.response?.data?.message || err?.message);
+      setIsSubmitting(false);
+    }
+  };
 
   const onSubmit = async (data) => {
     // console.log("data", data);
@@ -113,7 +183,11 @@ const useSettingSubmit = (id) => {
     isSave,
     isSubmitting,
     onSubmit,
+    onSubmitMessage,
     handleSubmit,
+    fileInputRef,
+    descInputRef,
+    textInputRef
   };
 };
 

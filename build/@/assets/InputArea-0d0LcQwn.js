@@ -1,0 +1,1 @@
+import{j as r,d as u}from"./index-bXf7bkfr.js";const d=({register:e,defaultValue:t,required:i,name:s,label:a,type:p,autoComplete:n,placeholder:o})=>r.jsx(r.Fragment,{children:r.jsx(u.Input,{...e(`${s}`,{required:i?!1:`${a} is required!`}),defaultValue:t,type:p,placeholder:o,name:s,autoComplete:n,className:"mr-2 h-12 p-2 bg-white"})});export{d as I};

@@ -148,7 +148,7 @@ const myCategory = () => {
           </TableFooter>
         </TableContainer>
       ) : (
-        <NotFound title="Sorry, There are no staff right now." />
+        <NotFound title="Sorry, There are no category right now." />
       )}
     </>
   );

@@ -28,6 +28,8 @@ const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
 const myCategory = lazy(() => import("@/pages/MyCategory"));
 const Page = lazy(() => import("@/pages/Page"));
 const User = lazy(() => import("@/pages/Users"));
+const SendBulkMessages = lazy(() => import("@/pages/SendBulkMessages"));
+const Review = lazy(() => import("@/pages/Review")); 
 
 /*
 //  * ⚠ These are internal routes!
@@ -142,6 +144,14 @@ const routes = [
   {
     path: "/edit-profile",
     component: EditProfile,
+  },
+  {
+    path: "/send-bulk-messages",
+    component: SendBulkMessages,
+  },
+  {
+    path: "/reviews",
+    component: Review,
   },
 ];
 

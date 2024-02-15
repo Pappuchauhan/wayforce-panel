@@ -49,19 +49,15 @@ const sidebar = [
       },
     ],
   },
-  */
+  
   {
     path: "/customers",
     icon: FiUsers,
     name: "Customers",
   },
-
+*/
  
-  {
-    path: "/coupons",
-    icon: FiGift,
-    name: "Coupons",
-  },
+  
   
   {
     path: "/orders",
@@ -88,12 +84,29 @@ const sidebar = [
     path: "/page",
     icon: FiSave,
     name: "Page",
-  },
+  }, 
 
   {
-    path: "/settings?settingTab=common-settings",
     icon: FiSettings,
     name: "Settings",
+    routes: [
+      {
+        path: "/settings?settingTab=common-settings", 
+        name: "General Settings",
+      },
+      {
+        path: "/send-bulk-messages", 
+        name: "Send Messages",
+      },
+      {
+        path: "/reviews", 
+        name: "Reviews",
+      },
+      {
+        path: "/coupons", 
+        name: "Coupons",
+      },
+    ],
   },
   /*
   {
