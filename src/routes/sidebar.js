@@ -106,6 +106,10 @@ const sidebar = [
         path: "/coupons", 
         name: "Coupons",
       },
+      {
+        path: "/banners", 
+        name: "Banners",
+      },
     ],
   },
   /*

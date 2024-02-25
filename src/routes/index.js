@@ -30,6 +30,7 @@ const Page = lazy(() => import("@/pages/Page"));
 const User = lazy(() => import("@/pages/Users"));
 const SendBulkMessages = lazy(() => import("@/pages/SendBulkMessages"));
 const Review = lazy(() => import("@/pages/Review")); 
+const Banners = lazy(() => import("@/pages/Banners")); 
 
 /*
 //  * ⚠ These are internal routes!
@@ -152,6 +153,10 @@ const routes = [
   {
     path: "/reviews",
     component: Review,
+  },
+  {
+    path: "/banners",
+    component: Banners,
   },
 ];
 

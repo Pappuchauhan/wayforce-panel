@@ -24,16 +24,16 @@ import PageTitle from "@/components/Typography/PageTitle";
 import DeleteModal from "@/components/modal/DeleteModal";
 import BulkActionDrawer from "@/components/drawer/BulkActionDrawer";
 import MainDrawer from "@/components/drawer/MainDrawer";
-import CouponDrawer from "@/components/drawer/CouponDrawer";
+import BannerDrawer from "@/components/drawer/BannerDrawer";
 import TableLoading from "@/components/preloader/TableLoading";
 import CheckBox from "@/components/form/others/CheckBox";
-import CouponTable from "@/components/coupon/CouponTable";
+import BannerTable from "@/components/banner/BannerTable";
 import NotFound from "@/components/table/NotFound"; 
 
 const Banners = () => {
   const { t } = useTranslation();
   const { toggleDrawer, lang } = useContext(SidebarContext);
-  const { data, loading, error } = useAsync(BannerServices.getAllCoupons);
+  const { data, loading, error } = useAsync(BannerServices.getAllBanners);
   // console.log('data',data)
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -79,10 +79,10 @@ const Banners = () => {
         setIsCheck={setIsCheck}
         title="Selected Banner"
       />
-      <BulkActionDrawer ids={allId} title="Banners" />
+     
 
       <MainDrawer>
-        <CouponDrawer id={serviceId} />
+        <BannerDrawer id={serviceId} />
       </MainDrawer>
 
          
@@ -96,7 +96,7 @@ const Banners = () => {
               <Input
                 ref={couponRef}
                 type="search"
-                placeholder={t("SearchCoupon")}
+                placeholder={"Search Banner"}
               />
             </div>
             <div className="flex items-center gap-2 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
@@ -116,6 +116,7 @@ const Banners = () => {
                   <span className="text-black dark:text-gray-200">Reset</span>
                 </Button>
               </div>
+            
               <div className="w-full mx-1">
                 <Button
                   onClick={toggleDrawer}
@@ -124,7 +125,7 @@ const Banners = () => {
                   <span className="mr-2">
                     <FiPlus />
                   </span>
-                  {t("AddCouponsBtn")}
+                  {"Add Banner"}
                 </Button>
               </div>
 
@@ -142,26 +143,19 @@ const Banners = () => {
         <TableContainer className="mb-8">
           <Table>
             <TableHeader>
-              <tr>
-                <TableCell>
-                  <CheckBox
-                    type="checkbox"
-                    name="selectAll"
-                    id="selectAll"
-                    handleClick={handleSelectAll}
-                    isChecked={isCheckAll}
-                  />
-                </TableCell>
+              <tr> 
+              <TableCell>{"Image"}</TableCell>
                 <TableCell>{"Title"}</TableCell>
-                <TableCell>{"Other"}</TableCell>
-                <TableCell>{"Status"}</TableCell> 
+                <TableCell>{"Other"}</TableCell>  
                 <TableCell>{"Status"}</TableCell>
+                <TableCell>{"Created"}</TableCell>
+                <TableCell>{"Updated"}</TableCell>
                 <TableCell className="text-right">
                   {t("CoupTblActions")}
                 </TableCell>
               </tr>
             </TableHeader>
-            <CouponTable
+            <BannerTable
               lang={lang}
               isCheck={isCheck}
               coupons={dataTable}

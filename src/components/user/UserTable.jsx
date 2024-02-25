@@ -84,7 +84,7 @@ const UserTable = ({ users, lang }) => {
               <span className="text-sm ">{user.age}</span>
             </TableCell>
             <TableCell>
-              <span className="text-sm ">{user.wallet}</span>
+              <span className={`text-sm ${user.wallet < 50 ? 'text-red-500 font-bold' : ''}`}>{user.wallet}</span>
             </TableCell>
   
             <TableCell className="text-center text-xs">

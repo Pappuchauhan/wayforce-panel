@@ -43,7 +43,9 @@ const user = () => {
   const [stateBy, setStateBy] = useState('');
   const [cityBy, setCityBy] = useState('');
   const [pincodeBy, setPincodeBy] = useState('');
-  const [searchBy, setSearchBy] = useState('');  
+  const [searchBy, setSearchBy] = useState('');
+  const [gender, setGender] = useState('');
+  const [age, setAge] = useState('');  
 
   const [selectedState, setSelectedState] = useState("Goa");
   const [cities, setCities] = useState(null);
@@ -87,7 +89,7 @@ const user = () => {
   };
 
 const { data, loading, error } = useAsync(() =>
-  UserServices.getAllUser({ userType, statusBy, categoryBy, stateBy, cityBy, pincodeBy, searchBy })
+  UserServices.getAllUser({ userType, statusBy, categoryBy, stateBy, cityBy, pincodeBy, searchBy, gender, age })
 );
    
 
@@ -135,7 +137,7 @@ const { data, loading, error } = useAsync(() =>
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody>
           <form method="post" onSubmit={handleFilterSubmit}>
-         <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
+         <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 py-2">
               <div>
                 <Label>User Type</Label>
                 <Select onChange={(event) => setUserType(event.target.value)}>
@@ -145,6 +147,17 @@ const { data, loading, error } = useAsync(() =>
                   <option value="Employer">Employer</option>
                   <option value="Manpower">Manpower</option>
                   <option value="Agent">Agent</option>
+                </Select>
+              </div>
+
+              <div>
+                <Label>Gender</Label>
+                <Select onChange={(event) => setGender(event.target.value)}>
+                  <option value=""  hidden>
+                    {"select gender"}
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option> 
                 </Select>
               </div>
 
@@ -190,7 +203,22 @@ const { data, loading, error } = useAsync(() =>
                 </div>
               </div>
             </div>
-            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
+            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 py-2">
+            <div>
+                <Label>Age</Label>
+                <div>
+                <Select onChange={(event) => setAge(event.target.value)}>
+                  <option value=""  hidden>
+                    {"select Age"}
+                  </option>
+                  <option value="20-30">20-30</option>
+                  <option value="30-40">30-40</option>
+                  <option value="40-50">40-50</option> 
+                  <option value="50-60">50-60</option> 
+                </Select>
+                </div>
+              </div>
+              
               <div>
                 <Label>State</Label>
                 <Select onChange={(e) => handleStateChange(e.target.value)}>
